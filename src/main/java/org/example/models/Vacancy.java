@@ -32,7 +32,9 @@ public class Vacancy{
     public String getName() {
         return name;
     }
-
+    public String getAreaName(){
+        return areaName;
+    }
 
 
     public static Vacancy parseVacancy(String[] fields) {
