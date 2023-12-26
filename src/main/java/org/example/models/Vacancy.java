@@ -35,35 +35,19 @@ public class Vacancy{
     public String getAreaName(){
         return areaName;
     }
+    public String getDescription(){return description;}
+    public Set<String> getKeySkills(){return keySkills;}
+    public Experience getExperience(){return experience;}
+    public boolean isPremium(){return premium;}
+    public String getEmployerName(){return employerName;}
+    public double getSalary(){return (salary.to+salary.from)/2;}
+    public LocalDateTime getPublishedAt(){return publishedAt;}
 
 
-    public static Vacancy parseVacancy(String[] fields) {
-        return new Vacancy(
-                fields[0],
-                parseDescription(fields[1]),
-                parseKeySkills(fields[2]),
-                Experience.parseExperience(fields[3]),
-                Boolean.parseBoolean(fields[4]),
-                fields[5],
-                Salary.parseSalary(fields[6], fields[7], fields[8], fields[9]),
-                fields[10],
-                parsePublishedAt(fields[11])
-        );
+    @Override
+    public String toString(){
+        String keySkillsJoined = String.join(",", keySkills);
+        return String.format("name:%s; description:%s; KeySkills:%s;",name,description,keySkillsJoined);
     }
 
-    private static String parseDescription(String description) {
-        return description
-                .replaceAll("<[^<>]*>", "")
-                .replaceAll("\\s+", " ")
-                .strip();
-    }
-
-    private static Set<String> parseKeySkills(String keySkillsString) {
-        return Arrays.stream(keySkillsString.split("\n")).collect(Collectors.toSet());
-    }
-
-    private static LocalDateTime parsePublishedAt(String publishedAtString) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ");
-        return LocalDateTime.parse(publishedAtString, formatter);
-    }
 }
