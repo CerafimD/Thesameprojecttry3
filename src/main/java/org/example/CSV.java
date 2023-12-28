@@ -3,6 +3,7 @@ package org.example;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
+import org.example.models.Currency;
 import org.example.models.Experience;
 import org.example.models.Salary;
 import org.example.models.Vacancy;
@@ -37,7 +38,7 @@ public final class CSV {
                 Experience.parseExperience(fields[3]),
                 Boolean.parseBoolean(fields[4]),
                 fields[5],
-                Salary.parseSalary(fields[6], fields[7], fields[8], fields[9]),
+                CSV.parseSalary(fields[6], fields[7], fields[8], fields[9]),
                 fields[10],
                 parsePublishedAt(fields[11])
         );
@@ -57,5 +58,12 @@ public final class CSV {
     private static LocalDateTime parsePublishedAt(String publishedAtString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ");
         return LocalDateTime.parse(publishedAtString, formatter);
+    }
+    public static Salary parseSalary(String fromString, String toString, String grossString, String currencyString) {
+        double from = Double.parseDouble(fromString);
+        double to = Double.parseDouble(toString);
+        boolean gross = Boolean.parseBoolean(grossString);
+        Currency currency = Currency.valueOf(currencyString);
+        return new Salary(from, to, gross, currency);
     }
 }

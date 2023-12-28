@@ -1,10 +1,8 @@
 package org.example.models;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class Vacancy{
     String name;
@@ -41,13 +39,23 @@ public class Vacancy{
     public boolean isPremium(){return premium;}
     public String getEmployerName(){return employerName;}
     public double getSalary(){return (salary.to+salary.from)/2;}
-    public LocalDateTime getPublishedAt(){return publishedAt;}
+    public Date getPublishedAt(){  return java.sql.Date.valueOf(publishedAt.toLocalDate());}
+
+
 
 
     @Override
-    public String toString(){
-        String keySkillsJoined = String.join(",", keySkills);
-        return String.format("name:%s; description:%s; KeySkills:%s;",name,description,keySkillsJoined);
+    public String toString() {
+        return "Vacancy{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", keySkills=" + keySkills +
+                ", experience=" + experience +
+                ", premium=" + premium +
+                ", employerName='" + employerName + '\'' +
+                ", salary=" + salary +
+                ", areaName='" + areaName + '\'' +
+                ", publishedAt=" + publishedAt +
+                '}';
     }
-
 }

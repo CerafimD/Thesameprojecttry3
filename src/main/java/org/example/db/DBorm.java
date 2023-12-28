@@ -14,7 +14,7 @@ import java.util.List;
 public class DBorm {
     private static Connection conn = null;
     private static ConnectionSource connectionSource = null;
-    private static final String URL = "jdbc:sqlite:D:\\Thesameprojecttry6\\test.db";
+    private static final String URL = "jdbc:sqlite:D:\\Thesameprojecttry6\\withdate.db";
 
     private static Dao<VacancyEntity, String> VacancyDao = null;
     public static void connect() throws SQLException {
@@ -24,11 +24,11 @@ public class DBorm {
 
     }
     public static void createTable() throws SQLException {
-        TableUtils.createTable(connectionSource, VacancyEntity.class);
+        TableUtils.createTableIfNotExists(connectionSource, VacancyEntity.class);
     }
     public static void saveVacancies(Vacancy vacancy) throws SQLException {
         VacancyDao.create(new VacancyEntity(vacancy.getName(),vacancy.getDescription(),vacancy.isPremium(),
-                    vacancy.getEmployerName(),vacancy.getSalary(),vacancy.getAreaName())) ;
+                    vacancy.getEmployerName(),vacancy.getSalary(),vacancy.getAreaName(),vacancy.getPublishedAt())) ;
 
         //query for all - вывод всего лист плеер фоловер ентитис
         //

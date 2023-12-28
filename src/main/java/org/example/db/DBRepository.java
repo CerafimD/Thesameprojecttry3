@@ -7,7 +7,7 @@ import java.util.List;
 
 public class DBRepository {
     private static Connection conn = null;
-    private static final String URL = "jdbc:sqlite:D:\\Thesameprojecttry6\\test.db";
+    private static final String URL = "jdbc:sqlite:D:\\Thesameprojecttry6\\withdate.db";
     public static void connect() {
         try {
             conn = DriverManager.getConnection(URL);
@@ -37,7 +37,7 @@ public class DBRepository {
         }
     }
     public static void saveVacancies(List<Vacancy> vacancies){
-        String sql = "INSERT INTO vacancyentity VALUES(?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO vacancyentity VALUES(?,?,?,?,?,?,?,?)";
         var i = 10;
         for (var vacancy : vacancies){
             try(Connection conn = DriverManager.getConnection(URL);
@@ -49,6 +49,7 @@ public class DBRepository {
                 pstmtn.setString(5,vacancy.getEmployerName());
                 pstmtn.setDouble(6,vacancy.getSalary());
                 pstmtn.setString(7,vacancy.getAreaName());
+                pstmtn.setDate(8,vacancy.getPublishedAt());
                 pstmtn.executeUpdate();
                 System.out.println("vacancy "+vacancy.getName()+"added");
             }
